@@ -1,58 +1,63 @@
 #include <iostream>
 
-class NonCopyableClass{
-  public:
-
+class NonCopyableClass {
+public:
   // state the compiler generated default constructor
-  NonCopyableClass()= default;
+  NonCopyableClass() = default;
 
-  // disallow copying
-  NonCopyableClass& operator = (const NonCopyableClass&) = delete;
-  NonCopyableClass (const NonCopyableClass&) = delete;
-  
-    // allow moving
-  NonCopyableClass& operator = (NonCopyableClass&&) = default;
-  NonCopyableClass (NonCopyableClass&&) = default;
+  // disallow copying (copy semantics)
+  NonCopyableClass &
+  operator=(const NonCopyableClass &) = delete; // Copy Assignment Operator
+  NonCopyableClass(const NonCopyableClass &) = delete; // Copy Constructor
+
+  // allow moving (move semantics)
+  NonCopyableClass &
+  operator=(NonCopyableClass &&) = default;        // Move Assignment Operator
+  NonCopyableClass(NonCopyableClass &&) = default; // Move Constructor
 };
-
 
 class TypeOnStack {
-  public:
-    void * operator new(std::size_t)= delete;
+public:
+  void *operator new(std::size_t) =
+      delete; // Disallow Heap Allocation - Class only lives on the stack
 };
 
-class TypeOnHeap{
-  public:
-    ~TypeOnHeap()= delete;
+class TypeOnHeap {
+public:
+  ~TypeOnHeap() = delete;
 };
 
-void onlyDouble(double){}
+void onlyDouble(double) {}
 
 template <typename T>
-void onlyDouble(T) = delete;
+void onlyDouble(T) = delete; // Avoids implicit conversions
 
-int main(){
+int main() {
 
   NonCopyableClass nonCopyableClass;
 
   TypeOnStack typeOnStack;
 
-  TypeOnHeap * typeOnHeap = new TypeOnHeap;
+  TypeOnHeap *typeOnHeap = new TypeOnHeap;
 
   onlyDouble(3.14);
 
   // force the compiler errors
 
   /*
+    NonCopyableClass nonCopyableClass2(nonCopyableClass);
 
-  NonCopyableClass nonCopyableClass2(nonCopyableClass);
+    TypeOnStack *typeOnHeap2 = new TypeOnStack;
 
-  TypeOnStack * typeOnHeap2 = new TypeOnStack;
+    TypeOnHeap typeOnStack2;
 
-  TypeOnHeap typeOnStack2;
-
-  onlyDouble(2011);
-
-  */
-
+    onlyDouble(2011);
+    */
 }
+
+/*
+default/delete can guide the creation/suppression of special member fcts!
+
+default = creation
+delete = suppression
+*/

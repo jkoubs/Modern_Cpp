@@ -1,25 +1,21 @@
 #include <iostream>
 
-class SomeType{
-  public:
-
+class SomeType {
+public:
   // state the compiler generated default constructor
   SomeType() = default;
 
   // constructor for int
-  SomeType(int value){
-    std::cout << "SomeType(int) " << '\n';
-  };
+  SomeType(int value) { std::cout << "SomeType(int) " << '\n'; };
 
   // explicit Copy Constructor
-  explicit SomeType(const SomeType&) = default;
+  explicit SomeType(const SomeType &) = default;
 
   // virtual destructor
   virtual ~SomeType() = default;
-
 };
 
-int main(){
+int main() {
 
   std::cout << '\n';
 
@@ -28,5 +24,11 @@ int main(){
   SomeType someType3(someType2);
 
   std::cout << '\n';
-
 }
+
+/*
+default/delete can guide the creation/suppression of special member fcts!
+
+default = creation
+delete = suppression
+*/
