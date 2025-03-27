@@ -20,7 +20,9 @@ public:
     }
   }
 
-  // Copy Constructor
+  // Copy Constructor invoked when a new object is created based an existing
+  // object
+
   MyClass(const MyClass &other)
       : name(other.name), id(other.id), size(other.size) {
     data = new int(*other.data); // deep copy for single int
@@ -55,7 +57,25 @@ int main() {
   original.print();
 
   MyClass copy = original; // triggers copy constructor
+  MyClass copy2(original); // same
   copy.print();
+  copy2.print();
 
   return 0;
 }
+
+/*
+
+* Copy Constructor invoked when creating new object based on existing object
+
+* Copy Assignment Operator Constructor invoked when reassigning values of
+existing object with another existing object
+
+
+Copy and Copy Assignment Operator Constructors are needed when working with
+pointers, otherwise not needed.
+
+
+Let's see a an example with pointers of 3_constructors_with_pointers.cpp
+
+*/
