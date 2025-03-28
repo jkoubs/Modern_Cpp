@@ -12,7 +12,7 @@ int main() {
   OnlyInt(5UL);
   OnlyInt(5.5);
   OnlyInt('5');
-  OnlyInt(true);
+  OnlyInt(true); // integral promotion -> 1
 }
 
 /*
